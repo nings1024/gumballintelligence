@@ -1,4 +1,4 @@
-var photo_path="/storage/emulated/0/agum/"
+var photo_path="/sdcard/agum/"
 
 var 地点 = images.read(photo_path+"d.jpg")
 var  怪物= images.read(photo_path+"g.jpg")
