@@ -57,7 +57,7 @@ function click_p(pic){
 function 获取情报() {
     click(85,2090)
     sleep(1000)
-    click(253,323)
+    click(253,397)
     sleep(1000)
     click_p(查看)
     sleep(1000)
@@ -78,11 +78,11 @@ function 获取怪物() {
         click(363, 1358)
         sleep(500)
         click(738, 1449)
-        sleep(2000)
+        sleep(3000)
         click_p(剿灭)
         sleep(800)
         click(232, 2287)
-        sleep(900)
+        sleep(1300)
         click(551, 354)
         sleep(500)
         click(360, 1638)
@@ -126,10 +126,10 @@ function 获取地点() {
             inx=true
         }else{
         var p=click_p(派遣)
-        sleep(800)
-        click(518, 373)
+        sleep(1500)
+        click(518, 429)
         sleep(5500)
-        click(403, 312)
+        click(403, 405)
         sleep(800)
         click(p.x+20, p.y+5)
         }
@@ -248,12 +248,17 @@ function 劫掠者营地(p) {
     click(237,2268)
     sleep(1000)
     click(337,1650)    
+    sleep(1300)
+    click(907, 2278)
     sleep(1000)
-    click(863, 2278)
+    click(565, 1431)
     sleep(1000)
     click(565, 1431)
     sleep(1000)
     click(565, 1431)
+    sleep(1000)
+    click(565, 1431)
+    sleep(1000)
 }
 function 移动魔法商店(p) {
     sleep(1000)
@@ -406,7 +411,7 @@ function 机械研究所 (p) {
     
 }
 function 梦幻码头 (p) {
-            sleep(1000)
+    sleep(1000)
     click(574,1578)
     sleep(1000)
     sleep(1000)
@@ -498,18 +503,4 @@ function main(){
     
 }
 main()
-// var w = floaty.window(
-//     <frame gravity="center">
-//             <vertical>
-//         <button  id="start" text="奥刃去X星球，其他闲置，点击这个,音量+停止脚本"/>
-//     </vertical>
-//     </frame>
-// );
-// w.start.click(() => {
-//     threads.start(function() {
-//         main();
-//     });
-//     w.close();
-// })
-
-// setInterval(()=>{}, 1000);
+// 处理地点()
