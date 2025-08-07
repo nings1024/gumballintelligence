@@ -1,4 +1,14 @@
-var photo_path="/sdcard/agum/"
+
+try{
+auto()
+}
+catch(e){
+    console.log("请开启无障碍服务")
+}
+auto.waitFor()
+
+
+var photo_path="/sdcard/Pictures/agum/"
 
 var 地点 = images.read(photo_path+"d.jpg")
 var  怪物= images.read(photo_path+"g.jpg")
