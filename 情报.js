@@ -1,0 +1,504 @@
+var photo_path="/storage/emulated/0/agum/"
+
+var 地点 = images.read(photo_path+"d.jpg")
+var  怪物= images.read(photo_path+"g.jpg")
+var  商人= images.read(photo_path+"s.jpg")
+var  派遣= images.read(photo_path+"pq.jpg")
+var  剿灭= images.read(photo_path+"jm.jpg")
+var  查看= images.read(photo_path+"ck.jpg")
+var  神秘商= images.read(photo_path+"神秘商人.jpg")
+var 地点处理函数映射 = {
+    "劫掠者营地": 劫掠者营地,
+    "移动魔法商店": 移动魔法商店,
+    "地下监狱": 地下监狱,
+    "战争要塞": 战争要塞,
+    "奇迹之泉": 奇迹之泉,
+    "受伤的王虫": 受伤的王虫,
+   "能量精炼厂": 能量精炼厂,
+   "幽暗洞穴": 幽暗洞穴,
+   "野兽祭坛": 野兽祭坛,
+   "巨兽的残骸": 巨兽的残骸,
+   "混沌仪"  : 混沌仪,
+   "古怪的大门": 古怪的大门,
+   "生物研究所": 生物研究所,
+   "深海漩涡": 深海漩涡,
+   "破损的信号杆": 破损的信号杆,
+   "未知的装置": 未知的装置,
+   "损坏的战舰": 损坏的战舰,
+   "隐秘的空间站": 隐秘的空间站,
+   "机械研究所": 机械研究所,
+   "梦幻码头": 梦幻码头,
+   "神秘商人": 神秘商人,
+};
+var inx=false
+var isred=false
+function click_p(pic){
+    var cap = captureScreen();
+    var p = findImage(cap, pic)
+    if (p) {
+        toastLog("找到图片")
+        click(p.x + 20, p.y + 2)
+        return p
+    }else{
+        toastLog("未找到图片")
+    }
+}
+
+function 获取情报() {
+    click(85,2090)
+    sleep(1000)
+    click(253,323)
+    sleep(1000)
+    click_p(查看)
+    sleep(1000)
+    click(531,1184)
+    sleep(1000)
+    click(576,1638)
+}
+function 获取怪物() {
+    sleep(1000)
+    var cap = captureScreen();
+    var p = findImage(cap, 怪物)
+    if (p) {
+        toastLog("找到怪物")
+        click(p.x, p.y)
+        sleep(500)
+        click(567, 1582)
+        sleep(500)
+        click(363, 1358)
+        sleep(500)
+        click(738, 1449)
+        sleep(2000)
+        click_p(剿灭)
+        sleep(800)
+        click(232, 2287)
+        sleep(900)
+        click(551, 354)
+        sleep(500)
+        click(360, 1638)
+        return true;
+    } else {
+        toastLog("未找到怪物")
+        return false;
+    }
+}
+function 获取地点() {
+    isred=false
+    var cap = captureScreen();
+    var p = findImage(cap, 地点)
+    if (p) {
+        var a=images.pixel(cap, p.x, p.y)
+        click(p.x, p.y)
+        sleep(500)
+        click(567, 1582)
+        sleep(500)
+        click(363, 1358)
+        sleep(800)
+        console.log(a)
+        if (a>-8000000)
+        {
+            sleep(500)
+            click(243, 2282)          
+            sleep(800)
+            click(361, 1338)          
+            sleep(800)
+            click(879, 2284)          
+            sleep(800)
+            click(879, 2284)          
+            isred=true
+            return true
+        }
+        click(738, 1449)
+        sleep(3000)
+        // 判断是否在X星球
+        inx=false
+        if(checkpoint()){
+            inx=true
+        }else{
+        var p=click_p(派遣)
+        sleep(800)
+        click(518, 373)
+        sleep(5500)
+        click(403, 312)
+        sleep(800)
+        click(p.x+20, p.y+5)
+        }
+        sleep(800)
+        click(232, 2287)
+        sleep(800)
+        click(631, 822)
+        sleep(2000)
+        return true;
+    }
+    else {
+        toastLog("未找到地点")
+        return false;
+    }
+}
+
+function 获取商人() {
+    var cap = captureScreen();
+    var p = findImage(cap, 商人)
+    if (p) {
+        click(p.x, p.y)
+        sleep(500)
+        click(567, 1582)
+        sleep(500)
+        click(363, 1358)
+        sleep(500)
+        click(738, 1449)
+        sleep(3000)
+        // 判断是否在X星球
+        inx=false
+        if(checkpoint()){
+            inx=true
+        }else{
+        var p=click_p(派遣)
+        sleep(800)
+        click(518, 373)
+        sleep(5500)
+        click(403, 312)
+        sleep(800)
+        click(p.x+20, p.y+5)
+        }
+        sleep(800)
+        click(232, 2287)
+        sleep(800)
+        click(631, 822)
+        sleep(2000)
+        return true;
+    }
+    else {
+        toastLog("未找到地点")
+        return false;
+    }
+}
+
+
+function checkpoint() {
+    var cap = captureScreen();
+    var p = findImage(cap, 查看)
+    if (p) {
+        toastLog("在X星球")
+        click(p.x + 20, p.y + 5)
+        sleep(1000)
+        return true;
+    } else {
+        toastLog("不在X星球")
+        return false;
+    }
+
+}
+
+function 处理地点() {
+    var cap = captureScreen();
+    for (var 地点名称 in 地点处理函数映射) {
+        var img = images.read(photo_path+"" + 地点名称 + ".jpg");
+        if (!img) {
+            toastLog("未找到图片: " + 地点名称);
+            continue;
+        }
+        var p = findImage(cap, img);
+        if (p) {
+            img.recycle();
+            toastLog("找到地点: " + 地点名称);
+            click(p.x + 20, p.y + 5)
+            sleep(1000)
+            地点处理函数映射[地点名称](p);
+            return true;
+        }
+        img.recycle();
+    }
+    return false;
+}
+function 离开地点() {
+    sleep(1000)
+    click(855, 2298)
+    if(inx)
+    {
+            sleep(1000)
+    click(855, 2298)
+
+    }else{
+    sleep(1000)
+    click(204, 2270)
+    // sleep(1000)
+    // click(204, 2270)
+
+    }
+
+}
+
+function 劫掠者营地(p) {
+    sleep(1000)
+    click(660,1465)
+    sleep(1000)
+    click(625,1250)
+    sleep(1000)
+    click(237,2268)
+    sleep(1000)
+    click(337,1650)    
+    sleep(1000)
+    click(863, 2278)
+    sleep(1000)
+    click(565, 1431)
+    sleep(1000)
+    click(565, 1431)
+}
+function 移动魔法商店(p) {
+    sleep(1000)
+    click(571,1189)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+}
+
+function 地下监狱 (p) {
+    sleep(1000)
+    click(567,1393)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+}
+function 战争要塞 (p) {
+    sleep(1000)
+    click(567,1393)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+}
+function 奇迹之泉 (p) {
+    sleep(1000)
+    click(574,1475)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+}
+function 受伤的王虫 (p) {
+    sleep(1000)
+    click(574,1475)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+}
+function 能量精炼厂 (p) {
+    sleep(1000)
+    click(574,1178)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+    
+}
+function 幽暗洞穴 (p) {
+        sleep(1000)
+    click(574,1148)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+
+}
+function 野兽祭坛 (p) {
+    sleep(1000)
+    click(574,1477)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+
+}
+function 巨兽的残骸 (p) {
+        sleep(1000)
+    click(574,1456)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+}
+function 混沌仪 (p) {
+    sleep(1000)
+    click(574,1477)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+}
+function 古怪的大门 (p) {
+        sleep(1000)
+    click(574,1270)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+    
+}
+function 生物研究所 (p) {
+    sleep(1000)
+    click(574,1395)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+    
+}
+function 深海漩涡 (p) {
+    sleep(1000)
+    click(574,1161)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+    
+}
+function 破损的信号杆 (p) {
+    sleep(1000)
+    click(574,1283)
+    sleep(1000)
+    click(574,1270)
+    sleep(1000)
+    click(222,2284)
+    sleep(1000)
+    click(337,1650)    
+    sleep(1000)
+    click(863, 2278)
+    sleep(1000)
+    click(565, 1431)
+    sleep(500)
+    click(565, 1431)
+    sleep(500)
+    click(565, 1431)
+    sleep(1000)
+    click(222,2284)        
+    
+}
+function 未知的装置 (p) {
+    sleep(1000)
+    click(574,1370)    
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+   
+}
+function 损坏的战舰 (p) {
+    sleep(1000)
+    click(574,1250)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+    
+}
+function 隐秘的空间站 (p) {
+    sleep(1000)
+    click(574,1552)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+}
+function 机械研究所 (p) {
+        sleep(1000)
+    click(574,1288)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+    
+}
+function 梦幻码头 (p) {
+            sleep(1000)
+    click(574,1578)
+    sleep(1000)
+    sleep(1000)
+    click(571,1432)
+}
+
+function 神秘商人 (p) {
+    sleep(1000)
+    click(574,1235)
+
+    sleep(1000)
+    click(294,1038)
+    sleep(500)
+    click(574,1429)
+
+    sleep(1000)
+    click(557,1038)
+    sleep(500)
+    click(574,1429)
+    
+    sleep(1000)
+    click(820,1038)
+    sleep(500)
+    click(574,1429)
+
+    sleep(1000)
+    click(294,1337)
+    sleep(500)
+    click(574,1429)
+    
+    sleep(1000)
+    click(557,1337)
+    sleep(500)
+    click(574,1429)
+  
+    sleep(1000)
+    click(928,2281)
+
+    sleep(1000)
+    click_p(神秘商)
+    sleep(1000)
+    click(561, 1404)
+    sleep(1000)
+    click(561, 1362)
+    sleep(1000)
+    click(223, 2276)
+    sleep(1000)
+    click(359, 1632)
+    sleep(1000)
+    click(909, 2297)
+
+    sleep(500)
+    click(570, 1440)
+    sleep(500)
+    click(570, 1440)
+    sleep(500)
+    click(570, 1440)
+    sleep(500)
+    click(570, 1440)
+    
+    sleep(500)
+    click(223, 2276)
+}
+
+function main(){
+    
+    while (true)
+    {
+        获取情报()
+        if (获取怪物()) {
+            sleep(5000)
+            continue;
+        }
+        if (!获取地点()) {
+ 获取商人()
+        }
+        if(isred){
+            continue
+        }
+                 if(处理地点()){
+            离开地点()
+            sleep(5000)
+            continue;
+            }
+        
+        break;
+    }
+    
+    
+}
+var w = floaty.window(
+    <frame gravity="center">
+            <vertical>
+        <button  id="start" text="奥刃去X星球，其他闲置，点击这个,音量+停止脚本"/>
+    </vertical>
+    </frame>
+);
+w.start.click(() => {
+    threads.start(function() {
+        main();
+    });
+    w.close();
+})
+
+setInterval(()=>{}, 1000);
