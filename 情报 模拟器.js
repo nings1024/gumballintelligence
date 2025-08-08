@@ -1,11 +1,3 @@
-42
-try {
-  auto();
-} catch (e) {
-  console.log("请开启无障碍服务");
-}
-auto.waitFor();
-
 var photo_path = "/sdcard/agum/";
 
 var 地点 = images.read(photo_path + "d.jpg");
@@ -42,13 +34,12 @@ var 地点处理函数映射 = {
 };
 var 映射机 = {
   移功阿法商鷹: "移动魔法商店",
-  皮 : "破损的信号杆",
+  皮: "破损的信号杆",
   沭冯旋活: "深海漩涡",
   损坏的舰: "损坏的战舰",
-  日:"巨兽的残骸",
+  日: "巨兽的残骸",
   末知的装置: "未知的装置",
   幽暗洞六: "幽暗洞穴",
-
 };
 var 可能的地点 = "";
 
@@ -67,134 +58,135 @@ function click_p(pic) {
 
 function 获取情报() {
   isbattle = false;
+  console.log("聊天栏");
   click(85, 2090);
   sleep(500);
+  console.log("奥刃");
   click(253, 397);
   sleep(1000);
+  console.log("点击查看");
   click_p(查看);
   sleep(1000);
+  console.log("点击情报");
   click(531, 1184);
   sleep(1000);
+  console.log("高级情报");
   click(576, 1638);
 }
-function 获取怪物() {
+function 获取怪物(p) {
+  sleep(500);
+  console.log("点击怪物");
+  click(p.x, p.y);
+  sleep(800);
+  console.log("兑换");
+  click(567, 1582);
+  sleep(800);
+  console.log("确认");
+  click(363, 1358);
   sleep(1000);
-  var cap = captureScreen();
-  var p = findImage(cap, 怪物);
-  if (p) {
-    toastLog("找到怪物");
-    click(p.x, p.y);
-    sleep(800);
-    click(567, 1582);
-    sleep(800);
-    click(363, 1358);
-    sleep(1000);
-    click(738, 1449);
-    sleep(3000);
-    click_p(剿灭);
-    sleep(800);
-    click(232, 2287);
-    sleep(1300);
-    click(551, 354);
-    sleep(500);
-    click(360, 1638);
-    return true;
-  } else {
-    toastLog("未找到怪物");
-    return false;
-  }
+  console.log("目标位置");
+  click(738, 1449);
+  sleep(3000);
+  console.log("剿灭");
+  click_p(剿灭);
+  sleep(800);
+  console.log("派遣");
+  click(232, 2287);
+  sleep(1300);
+  console.log("卡纳斯");
+  click(551, 354);
+  sleep(500);
+  console.log("出发");
+  click(360, 1638);
 }
-function 获取地点() {
-  可能的地点 = "";
+function 获取地点(p, cap) {
+  可能的地点 = "";  // 初始化可能的地点字符串
   isred = false;
-  var cap = captureScreen();
-  var p = findImage(cap, 地点);
-  if (p) {
-    var a = images.pixel(cap, p.x, p.y);
-    click(p.x, p.y);
-    sleep(800);
-    click(567, 1582);
+  var a = images.pixel(cap, p.x, p.y);  // 获取指定坐标点的像素值
+  console.log("点击地点");
+  click(p.x, p.y);  // 点击指定坐标点
+  sleep(800);       // 等待800毫秒
+  console.log("兑换");
+  click(567, 1582); // 点击指定坐标点
+  sleep(500);
+  console.log("确认");
+  click(363, 1358); // 点击指定坐标点
+  sleep(1200);      // 等待1200毫秒
+  console.log(a);   // 输出像素值到控制台
+  // 判断像素值是否大于-8000000
+  if (a > -8000000) {
     sleep(500);
-    click(363, 1358);
-    sleep(1200);
-    console.log(a);
-    if (a > -8000000) {
-      sleep(500);
-      click(243, 2282);
-      sleep(800);
-      click(361, 1338);
-      sleep(800);
-      click(879, 2284);
-      sleep(800);
-      click(879, 2284);
-      isred = true;
-      return true;
-    }
-    ocr地点();
-    click(738, 1449);
-    sleep(3000);
-    // 判断是否在X星球
-    inx = false;
-    if (checkpoint()) {
-      inx = true;
-    } else {
-      sleep(1000);
-      var p = click_p(派遣);
-      sleep(1500);
-      click(518, 429);
-      sleep(5500);
-      click(403, 405);
-      sleep(800);
-      click(p.x + 20, p.y + 5);
-    }
+    console.log("放弃");
+    click(243, 2282);
     sleep(800);
-    click(232, 2287);
+    click(361, 1338);
     sleep(800);
-    click(631, 822);
-    sleep(2000);
+    click(879, 2284);
+    sleep(800);
+    ocr地点();        // 调用OCR识别地点函数
+    isred = true;
     return true;
-  } else {
-    toastLog("未找到地点");
-    return false;
+  }
+  ocr地点();
+  console.log("目标位置");
+  click(720, 1409);
+  sleep(3000);
+  // 判断是否在X星球
+  inx = false;
+  处理派遣();
+  sleep(800);
+  console.log("卡纳斯");
+  click(232, 2287);
+  sleep(800);
+  console.log("特殊地点");
+  click(631, 822);
+  sleep(2000);
+}
+
+
+
+function 处理派遣() {
+  var cap = captureScreen();
+  var p = findImage(cap, 派遣);
+  if (p) {
+    console.log("不在X星球，处理派遣");
+    click(p.x + 20, p.y + 5);
+    sleep(1500);
+    console.log("派遣");
+    click(518, 429);
+    sleep(5500);
+    console.log("卡纳斯");
+    click(403, 405);
+    sleep(800);
+    console.log("查看");
+    click(p.x + 20, p.y + 5);
+  }
+  p = findImage(cap, 查看);
+  if (p) {
+    inx= true;
+    console.log("在X星球");
+    click(p.x + 20, p.y + 5);
   }
 }
 
-function 获取商人() {
-  var cap = captureScreen();
-  var p = findImage(cap, 商人);
-  if (p) {
-    可能的地点 = "神秘商人";
-    click(p.x, p.y);
-    sleep(500);
-    click(567, 1582);
-    sleep(500);
-    click(363, 1358);
-    sleep(900);
-    click(738, 1449);
-    sleep(3000);
-    // 判断是否在X星球
-    inx = false;
-    if (checkpoint()) {
-      inx = true;
-    } else {
-      var p = click_p(派遣);
-      sleep(1800);
-      click(518, 373);
-      sleep(5500);
-      click(403, 422);
-      sleep(800);
-      click(p.x + 20, p.y + 5);
-    }
-    sleep(800);
-    click(232, 2287);
-    sleep(800);
-    click(631, 822);
-    sleep(2000);
-    return true;
-  } else {
-    toastLog("未找到地点");
-    return false;
-  }
+function 获取商人(p) {
+  可能的地点 = "神秘商人";
+  click(p.x, p.y);
+  sleep(500);
+  click(567, 1582);
+  sleep(500);
+  click(363, 1358);
+  sleep(900);
+  click(738, 1449);
+  sleep(3000);
+  // 判断是否在X星球
+  inx = false;
+  处理派遣();
+  sleep(800);
+  click(232, 2287);
+  sleep(800);
+  click(631, 822);
+  sleep(2000);
 }
 
 function checkpoint() {
@@ -213,21 +205,21 @@ function checkpoint() {
 
 function 处理地点() {
   var cap = captureScreen();
-  path=photo_path + "" + 可能的地点 + ".jpg"
-  if (files.exists(path)){
+  path = photo_path + "" + 可能的地点 + ".jpg"
+  if (files.exists(path)) {
     console.log("处理可能的地点: " + 可能的地点);
-    地点名称=可能的地点;
+    地点名称 = 可能的地点;
     var img = images.read(photo_path + "" + 地点名称 + ".jpg");
-      var p = findImage(cap, img);
-      if (p) {
-        img.recycle();
-        toastLog("找到地点: " + 地点名称);
-        click(p.x + 20, p.y + 5);
-        sleep(1000);
-        地点处理函数映射[地点名称](p);
-        return true;
-      }
+    var p = findImage(cap, img);
+    if (p) {
       img.recycle();
+      toastLog("找到地点: " + 地点名称);
+      click(p.x + 20, p.y + 5);
+      sleep(1000);
+      地点处理函数映射[地点名称](p);
+      return true;
+    }
+    img.recycle();
   } else {
     for (var 地点名称 in 地点处理函数映射) {
       var img = images.read(photo_path + "" + 地点名称 + ".jpg");
@@ -269,7 +261,7 @@ function 离开地点() {
         break;
       }
       if (click_p(舰队指令)) {
-        sleep(2000);
+        sleep(1200);
         continue;
       }
       click(891, 2287);
@@ -511,30 +503,39 @@ function 神秘商人(p) {
   click(570, 1440);
 }
 
+
 function ocr地点() {
   var screen = captureScreen();
   screen = images.clip(screen, 266, 840, 500, 80);
-  screen=images.interval(screen, "#ef9f58", 20);
+  screen = images.interval(screen, "#ef9f58", 20);
   images.save(screen, "/sdcard/Pictures/ocr地点.jpg");
   var a = ocr(screen)[0];
   console.log("识别的地点: " + a);
   可能的地点 = 映射机[a];
   console.log("可能的地点: " + 可能的地点);
   if (!可能的地点) {
-    可能的地点=a
+    可能的地点 = a
   }
 }
 
 function main() {
-  0;
   while (true) {
     获取情报();
-    if (获取怪物()) {
-      sleep(5000);
+    sleep(1000);
+    var cap = captureScreen();
+    var p = findImage(cap, 怪物);
+    if (p) {
+      获取怪物(p)
+      sleep(3000);
       continue;
     }
-    if (!获取地点()) {
-      获取商人();
+    p = findImage(cap, 地点);
+    if (p) {
+      获取地点(p, cap)
+    }
+    else {
+      p = findImage(cap, 商人);
+      获取商人(p);
     }
     if (isred) {
       continue;
@@ -544,7 +545,6 @@ function main() {
       sleep(5000);
       continue;
     }
-
     break;
   }
 }
