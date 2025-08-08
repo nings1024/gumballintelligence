@@ -86,6 +86,7 @@ function 获取怪物(p) {
   sleep(1000);
   console.log("目标位置");
   click(738, 1449);
+  click(738, 1449);
   sleep(3000);
   console.log("剿灭");
   click_p(剿灭);
@@ -353,30 +354,30 @@ function 野兽祭坛(p) {
 function 巨兽的残骸(p) {
   sleep(1000);
   click(574, 1456);
-  sleep(1000);
-  sleep(1000);
+  sleep(1500);
   click(571, 1432);
+  sleep(500);
 }
 function 混沌仪(p) {
   sleep(1000);
   click(574, 1477);
-  sleep(1000);
-  sleep(1000);
+  sleep(1500);
   click(571, 1432);
+  sleep(500);
 }
 function 古怪的大门(p) {
   sleep(1000);
   click(574, 1270);
-  sleep(1000);
-  sleep(1000);
+  sleep(1500);
   click(571, 1432);
+  sleep(500);
 }
 function 生物研究所(p) {
   sleep(1000);
   click(574, 1395);
-  sleep(1000);
-  sleep(1000);
+  sleep(1500);
   click(571, 1432);
+  sleep(500);
 }
 function 深海漩涡(p) {
   sleep(1000);
