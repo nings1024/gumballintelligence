@@ -1,3 +1,4 @@
+42
 try {
   auto();
 } catch (e) {
@@ -41,9 +42,12 @@ var 地点处理函数映射 = {
 };
 var 映射机 = {
   移功阿法商鷹: "移动魔法商店",
-  意演的信号押: "破损的信号杆",
-  深海流满: "深海漩涡",
-  生物研究所: "生物研究所",
+  皮 : "破损的信号杆",
+  沭冯旋活: "深海漩涡",
+  损坏的舰: "损坏的战舰",
+  日:"巨兽的残骸",
+  末知的装置: "未知的装置",
+  幽暗洞六: "幽暗洞穴",
 
 };
 var 可能的地点 = "";
@@ -64,7 +68,7 @@ function click_p(pic) {
 function 获取情报() {
   isbattle = false;
   click(85, 2090);
-  sleep(1000);
+  sleep(500);
   click(253, 397);
   sleep(1000);
   click_p(查看);
@@ -134,6 +138,7 @@ function 获取地点() {
     if (checkpoint()) {
       inx = true;
     } else {
+      sleep(1000);
       var p = click_p(派遣);
       sleep(1500);
       click(518, 429);
@@ -295,9 +300,6 @@ function 劫掠者营地(p) {
   click(565, 1431);
   sleep(1000);
   sleep(500);
-  click(223, 2276);
-  sleep(1000);
-  isbattle = true;
 }
 function 移动魔法商店(p) {
   sleep(1000);
@@ -402,16 +404,15 @@ function 破损的信号杆(p) {
   click(337, 1650);
   sleep(1000);
   click(863, 2278);
-  sleep(1000);
-  click(565, 1431);
+  sleep(500);
+  click(863, 2278);
   sleep(500);
   click(565, 1431);
   sleep(500);
   click(565, 1431);
+  sleep(500);
+  click(565, 1431);
   sleep(1000);
-  click(222, 2284);
-  sleep(1500);
-  isbattle = true;
 }
 function 未知的装置(p) {
   sleep(1000);
@@ -508,11 +509,6 @@ function 神秘商人(p) {
   click(570, 1440);
   sleep(1000);
   click(570, 1440);
-
-  sleep(1000);
-  click(223, 2276);
-  sleep(1000);
-  isbattle = true;
 }
 
 function ocr地点() {
@@ -552,16 +548,4 @@ function main() {
     break;
   }
 }
-// main()
-
-function 获取地点1() {
-  isred = false;
-  var cap = captureScreen();
-  var p = findImage(cap, 地点);
-  if (p) {
-    var a = images.pixel(cap, p.x, p.y);
-    click(p.x, p.y);
-  }
-}
 main();
-// ocr地点();
