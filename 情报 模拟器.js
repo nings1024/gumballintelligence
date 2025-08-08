@@ -1,11 +1,11 @@
 
-// try{
-// auto()
-// }
-// catch(e){
-//     console.log("请开启无障碍服务")
-// }
-// auto.waitFor()
+try{
+auto()
+}
+catch(e){
+    console.log("请开启无障碍服务")
+}
+auto.waitFor()
 
 
 var photo_path="/sdcard/agum/"
@@ -17,6 +17,8 @@ var  派遣= images.read(photo_path+"pq.jpg")
 var  剿灭= images.read(photo_path+"jm.jpg")
 var  查看= images.read(photo_path+"ck.jpg")
 var  神秘商= images.read(photo_path+"神秘商人.jpg")
+var  舰队指令= images.read(photo_path+"舰队指令.png")
+var  撤回战队= images.read(photo_path+"撤回战队.png")
 var 地点处理函数映射 = {
     "劫掠者营地": 劫掠者营地,
     "移动魔法商店": 移动魔法商店,
@@ -42,6 +44,7 @@ var 地点处理函数映射 = {
 };
 var inx=false
 var isred=false
+var isbattle=false
 function click_p(pic){
     var cap = captureScreen();
     var p = findImage(cap, pic)
@@ -55,6 +58,7 @@ function click_p(pic){
 }
 
 function 获取情报() {
+    isbattle=false
     click(85,2090)
     sleep(1000)
     click(253,397)
@@ -72,11 +76,11 @@ function 获取怪物() {
     if (p) {
         toastLog("找到怪物")
         click(p.x, p.y)
-        sleep(500)
+        sleep(800)
         click(567, 1582)
-        sleep(500)
+        sleep(800)
         click(363, 1358)
-        sleep(500)
+        sleep(1000)
         click(738, 1449)
         sleep(3000)
         click_p(剿灭)
@@ -99,11 +103,11 @@ function 获取地点() {
     if (p) {
         var a=images.pixel(cap, p.x, p.y)
         click(p.x, p.y)
-        sleep(500)
+        sleep(800)
         click(567, 1582)
         sleep(500)
         click(363, 1358)
-        sleep(800)
+        sleep(1200)
         console.log(a)
         if (a>-8000000)
         {
@@ -118,6 +122,7 @@ function 获取地点() {
             isred=true
             return true
         }
+        
         click(738, 1449)
         sleep(3000)
         // 判断是否在X星球
@@ -155,7 +160,7 @@ function 获取商人() {
         click(567, 1582)
         sleep(500)
         click(363, 1358)
-        sleep(500)
+        sleep(900)
         click(738, 1449)
         sleep(3000)
         // 判断是否在X星球
@@ -164,10 +169,10 @@ function 获取商人() {
             inx=true
         }else{
         var p=click_p(派遣)
-        sleep(800)
+        sleep(1800)
         click(518, 373)
         sleep(5500)
-        click(403, 312)
+        click(403, 422)
         sleep(800)
         click(p.x+20, p.y+5)
         }
@@ -222,21 +227,32 @@ function 处理地点() {
     return false;
 }
 function 离开地点() {
-    sleep(1000)
-    click(855, 2298)
-    if(inx)
-    {
+    if(inx){
+        while (true) {
+            if(click_p(舰队指令)){
+                sleep(1000)
+                click(891, 2287)
+                sleep(1000)
+                break;
+            }
+            click(891, 2287)
             sleep(1000)
-    click(855, 2298)
-
+        }
     }else{
-    sleep(1000)
-    click(204, 2270)
-    // sleep(1000)
-    // click(204, 2270)
-
-    }
-
+        while (true) {
+            if(click_p(撤回战队)){
+                sleep(1000)
+                break
+            }
+            if(click_p(舰队指令)){
+                sleep(2000)
+                continue
+            }
+            click(891, 2287)
+            sleep(1000)
+        }
+        sleep(1000)
+    }   
 }
 
 function 劫掠者营地(p) {
@@ -259,6 +275,10 @@ function 劫掠者营地(p) {
     sleep(1000)
     click(565, 1431)
     sleep(1000)
+    sleep(500)
+    click(223, 2276)
+    sleep(1000)
+    isbattle=true    
 }
 function 移动魔法商店(p) {
     sleep(1000)
@@ -377,7 +397,8 @@ function 破损的信号杆 (p) {
     click(565, 1431)
     sleep(1000)
     click(222,2284)        
-    
+    sleep(1500)
+    isbattle=true   
 }
 function 未知的装置 (p) {
     sleep(1000)
@@ -462,6 +483,12 @@ function 神秘商人 (p) {
     click(359, 1632)
     sleep(1000)
     click(909, 2297)
+    sleep(200)
+    click(909, 2297)
+    sleep(200)
+    click(909, 2297)
+    sleep(200)
+    click(909, 2297)        
 
     sleep(500)
     click(570, 1440)
@@ -469,38 +496,37 @@ function 神秘商人 (p) {
     click(570, 1440)
     sleep(500)
     click(570, 1440)
-    sleep(500)
+    sleep(1000)
     click(570, 1440)
     
-    sleep(500)
+    sleep(1000)
     click(223, 2276)
+    sleep(1000)
+    isbattle=true
 }
 
 function main(){
-    
-    while (true)
-    {
-        获取情报()
-        if (获取怪物()) {
-            sleep(5000)
-            continue;
-        }
-        if (!获取地点()) {
- 获取商人()
-        }
-        if(isred){
-            continue
-        }
-                 if(处理地点()){
-            离开地点()
-            sleep(5000)
-            continue;
-            }
-        
-        break;
+  0;
+  while (true) {
+    获取情报();
+    if (获取怪物()) {
+      sleep(5000);
+      continue;
     }
-    
-    
+    if (!获取地点()) {
+      获取商人();
+    }
+    if (isred) {
+      continue;
+    }
+    if (处理地点()) {
+      离开地点();
+      sleep(5000);
+      continue;
+    }
+
+    break;
+  }
 }
 main()
-// 处理地点()
+// 离开地点()
